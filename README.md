@@ -1,0 +1,2 @@
+# coreJava
+core java practise
