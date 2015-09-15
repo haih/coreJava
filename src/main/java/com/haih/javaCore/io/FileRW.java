@@ -13,9 +13,11 @@
 package com.haih.javaCore.io;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
@@ -32,25 +34,55 @@ import java.io.UnsupportedEncodingException;
 public class FileRW {
 
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException {
+        WriteMethod();
         ReadMethod();
     }
 
-    private static void ReadMethod() throws UnsupportedEncodingException, FileNotFoundException {
+    private static void WriteMethod() throws UnsupportedEncodingException, FileNotFoundException {
         String decode = "decode.txt";
         FileOutputStream fos = new FileOutputStream(new File(decode));
         OutputStreamWriter osw = new OutputStreamWriter(fos,"UTF-8");
         try {
-            osw.write("这个是需要做测试用的文字");
+            osw.write("这个是需要做测试用的文字这个是需要做测试用的文字,这个是需要做测试用的文字,这个是需要做测试用的文字,这个是需要做测试用的文字");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
             try {
                 osw.close();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }
+    }
+    private static void ReadMethod() throws UnsupportedEncodingException, FileNotFoundException {
+        String decode = "decode.txt";
+        FileInputStream fis = new FileInputStream(new File(decode));
+        InputStreamReader isr = new InputStreamReader(fis);
+        char[] cbuffer = new char[1024];
+        StringBuffer contentBuffer = new StringBuffer();
+        try {
+            while (isr.read(cbuffer) != -1) {
+                contentBuffer.append(cbuffer);
+            }   
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                isr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(contentBuffer);      
+    }
+    
+    private static void encode(){
+        String string = "this is encode test";
+        try {
+            byte[] utf = string.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 }
